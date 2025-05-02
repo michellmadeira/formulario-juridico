@@ -1,0 +1,20 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Teste de Parecer Jurídico</title>
+</head>
+<body style="font-family: Arial, sans-serif; padding: 2rem;">
+  <h1>Formulário de Teste - Parecer Jurídico</h1>
+  <form action="http://localhost:5678/webhook-test/parecer-juridico" method="POST" enctype="multipart/form-data">
+    <label for="cpfOuCnpj">CPF ou CNPJ:</label><br>
+    <input type="text" id="cpfOuCnpj" name="cpfOuCnpj" required><br><br>
+
+    <label for="matriculaPdf">Matrícula do Imóvel (PDF):</label><br>
+    <input type="file" id="matriculaPdf" name="matriculaPdf" accept=".pdf" required><br><br>
+
+    <button type="submit">Enviar</button>
+  </form>
+</body>
+</html>
