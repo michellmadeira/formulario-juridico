@@ -1,20 +1,110 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Teste de Parecer Jurídico</title>
+  <title>Enviar Matrículas - Parecer Jurídico</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f7f7fa;
+      padding: 0;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .form-container {
+      background: #fff;
+      box-shadow: 0 6px 32px rgba(0,0,0,0.10);
+      border-radius: 18px;
+      padding: 2.5rem 2rem 2rem 2rem;
+      min-width: 340px;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+    }
+    h1 {
+      font-size: 1.35rem;
+      margin-bottom: 1.7rem;
+      color: #111926;
+      letter-spacing: -0.5px;
+      font-weight: 600;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.65rem;
+      font-size: 1.02rem;
+      color: #444d5c;
+      font-weight: 500;
+      text-align: left;
+    }
+    input[type="file"] {
+      padding: 0.6rem;
+      border-radius: 8px;
+      border: 1px solid #d1d6e0;
+      background: #f5f6fa;
+      margin-bottom: 1.5rem;
+      width: 100%;
+      font-size: 0.98rem;
+      cursor: pointer;
+      transition: border 0.18s;
+    }
+    input[type="file"]:focus {
+      border: 1.5px solid #3560fa;
+      outline: none;
+    }
+    .file-list {
+      text-align: left;
+      margin-bottom: 1.2rem;
+      font-size: 0.97rem;
+      color: #222;
+      min-height: 1.25em;
+    }
+    button[type="submit"] {
+      background: linear-gradient(90deg,#3050ea 50%, #3066fa 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(48,80,234,0.13);
+      transition: background 0.19s;
+    }
+    button[type="submit"]:hover {
+      background: linear-gradient(90deg,#2340c0 50%, #2458c8 100%);
+    }
+  </style>
 </head>
-<body style="font-family: Arial, sans-serif; padding: 2rem;">
-  <h1>Formulário de Teste - Parecer Jurídico</h1>
-  <form action="https://n8n-railway-production-9bcd.up.railway.app/webhook/parecer-juridico" method="POST" enctype="multipart/form-data">
-    <label for="cpfOuCnpj">CPF ou CNPJ:</label><br>
-    <input type="text" id="cpfOuCnpj" name="cpfOuCnpj" required><br><br>
-
-    <label for="matriculaPdf">Matrícula do Imóvel (PDF):</label><br>
-    <input type="file" id="matriculaPdf" name="matriculaPdf" accept=".pdf" required><br><br>
-
-    <button type="submit">Enviar</button>
-  </form>
+<body>
+  <div class="form-container">
+    <h1>Enviar Matrículas para Análise</h1>
+    <form action="https://n8n-railway-production-9bcd.up.railway.app/webhook/parecer-juridico" method="POST" enctype="multipart/form-data">
+      <label for="matriculasPdf">Matrículas do Imóvel (PDFs):</label>
+      <input type="file" id="matriculasPdf" name="matriculasPdf[]" accept=".pdf" multiple required>
+      <div class="file-list" id="fileList"></div>
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+  <script>
+    // Atualiza lista dos arquivos selecionados
+    document.getElementById('matriculasPdf').addEventListener('change', function(event) {
+      const fileList = event.target.files;
+      const listContainer = document.getElementById('fileList');
+      if (!fileList.length) {
+        listContainer.innerHTML = "";
+        return;
+      }
+      let html = "<b>Arquivos selecionados:</b><ul>";
+      for (let i = 0; i < fileList.length; i++) {
+        html += "<li>" + fileList[i].name + "</li>";
+      }
+      html += "</ul>";
+      listContainer.innerHTML = html;
+    });
+  </script>
 </body>
 </html>
